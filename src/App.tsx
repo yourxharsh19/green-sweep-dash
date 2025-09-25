@@ -8,7 +8,12 @@ import Navbar from "./components/Navbar";
 import Auth from "./pages/Auth";
 import CitizenDashboard from "./pages/citizen/Dashboard";
 import AuthorityDashboard from "./pages/authority/Dashboard";
-import NotFound from "./pages/NotFound";
+import Analytics from "./pages/Analytics";
+import Report from "./pages/citizen/Report";
+import Bins from "./pages/citizen/Bins";
+import Rewards from "./pages/citizen/Rewards";
+import MapPage from "./pages/Map";
+import UsersPage from "./pages/authority/Users";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +48,14 @@ const AppRoutes = () => {
       <Route path="/auth" element={user ? <Navigate to="/dashboard" replace /> : <Auth />} />
       <Route path="/" element={user ? <Navigate to="/dashboard" replace /> : <Navigate to="/auth" replace />} />
       <Route 
+        path="/analytics" 
+        element={
+          <ProtectedRoute>
+            {user?.role === 'authority' ? <Analytics /> : <Navigate to="/dashboard" replace />}
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
         path="/dashboard" 
         element={
           <ProtectedRoute>
@@ -50,7 +63,47 @@ const AppRoutes = () => {
           </ProtectedRoute>
         } 
       />
-      <Route path="*" element={<NotFound />} />
+      <Route 
+        path="/report" 
+        element={
+          <ProtectedRoute>
+            {user?.role === 'citizen' ? <Report /> : <Navigate to="/dashboard" replace />}
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/bins" 
+        element={
+          <ProtectedRoute>
+            {user?.role === 'citizen' ? <Bins /> : <Navigate to="/dashboard" replace />}
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/rewards" 
+        element={
+          <ProtectedRoute>
+            {user?.role === 'citizen' ? <Rewards /> : <Navigate to="/dashboard" replace />}
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/map" 
+        element={
+          <ProtectedRoute>
+            {user ? <MapPage /> : <Navigate to="/auth" replace />}
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/users" 
+        element={
+          <ProtectedRoute>
+            {user?.role === 'authority' ? <UsersPage /> : <Navigate to="/dashboard" replace />}
+          </ProtectedRoute>
+        } 
+      />
+      <Route path="*" element={<Navigate to="/analytics" replace />} />
     </Routes>
   );
 };

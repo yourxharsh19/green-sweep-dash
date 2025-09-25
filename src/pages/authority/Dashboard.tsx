@@ -152,7 +152,7 @@ const AuthorityDashboard = () => {
                 </Badge>
               </div>
             ))}
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full" onClick={() => navigate('/map')}>
               <MapPin className="h-4 w-4 mr-2" />
               View on Map
             </Button>
@@ -164,7 +164,7 @@ const AuthorityDashboard = () => {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Route className="h-5 w-5" />
-              AI-Optimized Routes
+              Suggested Routes
             </CardTitle>
             <CardDescription>Suggested collection routes for today</CardDescription>
           </CardHeader>
